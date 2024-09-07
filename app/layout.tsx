@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs';
 
-const inter = Inter({ subsets: ["latin"] });
+import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
+
+const FontSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ['300','400','500','600','700'], 
+  variable: '--font-sans'
+});
 
 export const metadata: Metadata = {
-  title: "Devathon Project",
-  description: "Team Project for Devathon 2024",
+  title: "CarePulse",
+  description: "A healthcare Management System",
 };
 
 export default function RootLayout({
@@ -24,27 +23,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ClerkProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {/* Navigation based on authentication status */}
-            <SignedIn>
-              <UserButton /> {/* Show user profile button when signed in */}
-            </SignedIn>
-            <SignedOut>
-              {/* Optionally include other components or styles for signed-out users */}
-              {/* <SignInButton /> */}
-            </SignedOut>
-
-            {/* Render children */}
-            {children}
-          </ThemeProvider>
-        </ClerkProvider>
+      <body className={cn('min-h-screen bg-dark-300 font-sans antialiased', FontSans.variable)}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

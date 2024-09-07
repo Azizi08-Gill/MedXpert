@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CarePulse - Medical Appointment System
 
-## Getting Started
+CarePulse is a full-fledged medical application that provides an interactive platform for patients to make reservations with their desired doctors. Doctors can then choose to accept or reject these appointments.
 
-First, run the development server:
+[Live Demo](https://the-care-pulse.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- User-friendly interface for patients to book appointments
+- Doctor dashboard for managing appointment requests
+- Real-time updates on appointment status
+- Secure user authentication and authorization
+- Patient verification process
+- Simple appointment booking form
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Appwrite](https://appwrite.io/)
+- [Sentry](https://sentry.io/)
+- [Twilio](https://www.twilio.com/)
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. **Sign Up / Login:**
+   - New users can sign up on the first page.
+   - Administrators can log in to the admin dashboard.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Patient Verification:**
+   - After signing up, users can become verified patients by filling out custom information.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. **Booking an Appointment:**
+   - Verified patients can book an appointment by filling out a simple form.
+   - Select desired doctor, date, and time.
+   - Submit the appointment request.
 
-## Deploy on Vercel
+4. **Appointment Management:**
+   - Doctors can view and manage appointment requests through their dashboard.
+   - Options to accept or reject appointment requests.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Real-time Updates:**
+   - Patients receive real-time updates on their appointment status.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Deployment
+
+This project is deployed on [Vercel](https://vercel.com/).
+
+## Acknowledgements
+
+- Inspired by Adrian Hajdin
