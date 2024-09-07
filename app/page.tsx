@@ -8,21 +8,24 @@ export default function Home({ searchParams }: SearchParamProps) {
 
   return (
     <GridBackground>
-      <div className="flex items-center justify-center h-screen">
-        {isAdmin && <PassKeyModal />}
-        
-        <div className="max-w-[496px] w-full text-center">
-          <h1 className="mb-12 text-2xl font-bold">Welcome to CarePulse</h1>
+      <div>
 
-          <PatientForm />
+        <div className="flex items-center justify-center">
+          {isAdmin && <PassKeyModal />}
+          
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-[496px] w-full text-center">
+            <h1 className="mb-8 text-2xl font-bold">Welcome to CarePulse</h1>
 
-          <div className="text-sm mt-8 flex justify-between">
-            <p className="text-dark-600">
-              © 2024 CarePulse
-            </p>
-            <Link href="/?admin=true" className="text-green-500">
-              Admin
-            </Link>
+            <PatientForm />
+
+            <div className="text-sm mt-8 flex justify-between">
+              <p className="text-dark-600">
+                © 2024 CarePulse
+              </p>
+              <Link href="/?admin=true" className="text-green-500">
+                Admin
+              </Link>
+            </div>
           </div>
         </div>
       </div>
