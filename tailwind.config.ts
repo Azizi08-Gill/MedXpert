@@ -47,7 +47,9 @@ const config = {
         },
       },
       fontFamily: {
+        // Extending the default sans font and adding Ubuntu
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        ubuntu: ['Ubuntu', 'sans-serif'], // Added Ubuntu font
       },
       backgroundImage: {
         appointments: "url('/assets/images/appointments-bg.png')",

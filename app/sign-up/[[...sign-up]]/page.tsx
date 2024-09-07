@@ -23,46 +23,51 @@ export default function SignUpPage() {
 
   // Render the SignUp component if the user is not signed in
   return (
-    
     <GridBackground>
-      
-      <div style={{ marginBottom: '5rem',zIndex:1, marginLeft:-400}}>
-        <label style={{fontWeight:"bolder"}} htmlFor="role">Role:</label>
-        <select
-  id="role"
-  name="role"
-  value={role}
-  onChange={(e) => setRole(e.target.value)}
-  style={{
-    width: '15%',
-    margin: '20px',            // Full width of the container
-    //padding: '0.75rem',       // Padding for better spacing
-    fontSize: '1rem',         // Font size for readability
-    border: '1px solid #ddd', // Light border color
-    borderRadius: '4px',     // Rounded corners
-    outline: 'none',         // Remove default outline
-    backgroundColor: '#fff', // White background
-    color: '#333',           // Text color
-    cursor: 'pointer',       // Cursor to indicate it's clickable
-    transition: 'border-color 0.2s ease-in-out', // Smooth transition
-  }}
->
-  <option value="patient">Patient</option>
-  <option value="admin">Admin</option>
-  <option value="doctor">Doctor</option>
-</select>
-
-      </div>
-
-      <SignUp
-        path="/sign-up"
-        routing="path"
-        signInUrl="/sign-in"
-        redirectUrl="/dashboard"
-        unsafeMetadata={{
-          role: role, // Store the selected role as part of the metadata
+      {/* Background gradient from purple to black to white */}
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{
+          background: "linear-gradient(135deg, purple, black, white)",
+          zIndex: 1,
         }}
-      />
+      >
+        <div style={{ marginBottom: '5rem', zIndex: 1, marginLeft: -400 }}>
+          <label style={{ fontWeight: "bolder" }} htmlFor="role">Role:</label>
+          <select
+            id="role"
+            name="role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            style={{
+              width: '15%',
+              margin: '20px',
+              fontSize: '1rem',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+              outline: 'none',
+              backgroundColor: '#fff',
+              color: '#333',
+              cursor: 'pointer',
+              transition: 'border-color 0.2s ease-in-out',
+            }}
+          >
+            <option value="patient">Patient</option>
+            <option value="admin">Admin</option>
+            <option value="doctor">Doctor</option>
+          </select>
+        </div>
+
+        <SignUp
+          path="/sign-up"
+          routing="path"
+          signInUrl="/sign-in"
+          redirectUrl="/dashboard"
+          unsafeMetadata={{
+            role: role, // Store the selected role as part of the metadata
+          }}
+        />
+      </div>
     </GridBackground>
   );
 }
