@@ -37,7 +37,8 @@ export default function RootLayout({
               <UserButton /> {/* Show user profile button when signed in */}
             </SignedIn>
             <SignedOut>
-              <SignInButton /> {/* Show sign-in button when signed out */}
+              {/* Optionally include other components or styles for signed-out users */}
+              {/* <SignInButton /> */}
             </SignedOut>
 
             {/* Render children */}
