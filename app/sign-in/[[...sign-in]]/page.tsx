@@ -6,7 +6,7 @@ export default function SignInPage() {
   useSyncClerkAndAppwrite; // Call the sync function
 
   return (
-    <div className='z-50'>
+    <div className='z-50 h-screen relative top-0 left-0'>
       <GridBackground>
         <SignIn />
       </GridBackground>
