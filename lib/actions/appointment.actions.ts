@@ -94,7 +94,7 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
         }
 
         const smsMessage = `
-            Hi, it's CarePulse.
+            Hi, it's MedXpert.
             ${type === 'schedule'
             ? `Your appointment has been scheduled for 
               ${formatDateTime(appointment.schedule!).dateTime} with Dr. ${appointment.primaryPhysician}`

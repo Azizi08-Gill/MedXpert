@@ -74,7 +74,7 @@ const RegisterForm = ({user} : {user:User}) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-12">
         <section className="space-y-4">
-          <h1 className="header">Welcome 👋</h1>
+          <h1 className="header">Welcome to MedXpert</h1>
           <p className="text-dark-700">Let use know more about yourself</p>
         </section>
 
