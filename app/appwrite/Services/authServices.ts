@@ -1,84 +1,76 @@
-import { account } from "../config";
-import { OAuthProvider } from "appwrite"; // Import the OAuthProvider from Appwrite
-import { ID } from "appwrite";
-// Define a User object type for return type (adjust as per actual API structure if needed)
+'use client'
+
+// authServices.ts
+
+import { Client, Account, Databases, ID } from "appwrite";
+import { useSignUp } from "@clerk/nextjs"; // Clerk's hook for sign-up
+import { useEffect } from "react";
+import { useUser } from "@clerk/nextjs"; // Use this to fetch the current user
+
+// Appwrite client initialization
+const client = new Client()
+  .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!) // Appwrite API endpoint
+  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!); // Appwrite Project ID
+
+const account = new Account(client);
+const databases = new Databases(client);
+
+// Define a User object type
 interface User {
-  $id: string;
-  [key: string]: any; // Use this to allow other dynamic properties
+  id: string; // Clerk user ID
+  email: string;
+  username?: string;
 }
 
-interface Session {
-  $id: string;
-  [key: string]: any; // Use this to allow other dynamic properties
-}
-
-// Register user with email and password
-export async function registerUser(username: string, email: string, password: string): Promise<User> {
-  const user = await account.create(ID.unique(), email, password, username);
-  localStorage.setItem("authToken", user.$id);
-  console.log(user);
-  return user;
-}
-
-// Sign in with email and password
-export const signIn = async (email: string, password: string): Promise<Session> => {
+// Function to create a user in Appwrite after Clerk sign-up
+const createAppwriteUser = async (user: User) => {
   try {
-    const session = await account.createSession(email, password); // Use createSession for email-password login
-    localStorage.setItem("authToken", session.$id); // Store the session ID
-    return session;
-  } catch (error: any) {
-    console.error("Login error:", error); // Log the error details
+    // Create a new user in Appwrite
+    const newUser = await account.create(
+      ID.unique(),
+      user.email,
+      "temporary_password", // Placeholder password
+      user.username || user.email
+    );
+    
+    // Store user data in your Appwrite database
+    await databases.createDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+      process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!,
+      ID.unique(),
+      {
+        clerkId: user.id, // Store the Clerk ID for reference
+        email: user.email,
+        username: user.username,
+      }
+    );
+
+    console.log("User created in Appwrite:", newUser);
+  } catch (error) {
+    console.error("Error creating user in Appwrite:", error);
     throw error;
   }
 };
 
-// Google OAuth Sign-in
-export const signInWithGoogle = async (): Promise<void> => {
-  try {
-    // Use the correct OAuthProvider type for Google OAuth
-    await account.createOAuth2Session(OAuthProvider.Google, `${window.location.origin}/dashboard`, `${window.location.origin}/auth/sign-in`);
-  } catch (error: any) {
-    console.error("Google Sign-in error:", error); // Log the error details
-    throw error;
-  }
+// Custom Hook to sync Clerk users with Appwrite
+const useSyncClerkAndAppwrite = () => {
+  const { isLoaded, signUp } = useSignUp();
+  const { user } = useUser(); // Use Clerk's useUser hook to get the current user
+
+  useEffect(() => {
+    if (isLoaded && signUp && signUp.createdUserId) {
+      // Use the user object to get details directly from Clerk
+      const clerkUser = {
+        id: user?.id || signUp.createdUserId, // Use the Clerk user ID
+        email: user?.emailAddresses[0]?.emailAddress || "", // Use Clerk's email
+        username: user?.username || "", // Optional username
+      };
+
+      // Sync Clerk user with Appwrite when Clerk user signs up
+      createAppwriteUser(clerkUser)
+        .catch((error) => console.error("Error syncing user with Appwrite:", error));
+    }
+  }, [isLoaded, signUp, user]); // Ensure user data is available
 };
 
-// Sign out the current user
-export const signOutUser = async (): Promise<void> => {
-  try {
-    await account.deleteSession('current');
-    localStorage.removeItem("authToken");
-  } catch (error: any) {
-    throw error;
-  }
-};
-
-// Get the current user
-export const getCurrentUser = async (): Promise<User> => {
-  try {
-    const user = await account.get();
-    return user;
-  } catch (error: any) {
-    throw error;
-  }
-};
-
-// Check if the user is authenticated
-export const checkAuth = async (): Promise<boolean> => {
-  try {
-    await account.get(); // If this doesn't throw an error, the user is authenticated
-    return true;
-  } catch (error: any) {
-    return false;
-  }
-};
-
-// Send password recovery email
-export const sendPasswordRecoveryEmail = async (email: string): Promise<void> => {
-  const resetPasswordUrl = `${window.location.origin}/reset-password`; // Automatically construct URL
-  try {
-    await account.createRecovery(email, resetPasswordUrl);
-  } catch (error: any) {
-    throw error;
-  }
-};
+export default useSyncClerkAndAppwrite; // Default export

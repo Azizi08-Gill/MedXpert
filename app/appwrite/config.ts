@@ -5,9 +5,9 @@ import { Client, Account, Databases, Storage } from "appwrite";
 // const projectID = process.env.REACT_APP_APPWRITE_PROJECT_ID;
 // const databaseId = process.env.REACT_APP_APPWRITE_DATABASE_ID;
 
-const Endpoint = "https://cloud.appwrite.io/v1";
-const projectID = "66db237e003406b538c0";
-const databaseId = "66db24d6003760b1e1e1";
+const Endpoint = process.env.NEXT_PUBLIC_ENDPOINT!;
+const projectID = process.env.NEXT_PUBLIC_PROJECT_ID!;
+const databaseId = process.env.NEXT_PUBLIC_DATABASE_ID!;
 
 
 
